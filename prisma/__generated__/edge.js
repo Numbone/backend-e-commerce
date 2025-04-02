@@ -169,7 +169,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/nrl/backend/prisma/__generated__",
+      "value": "C:\\Users\\nurly\\OneDrive\\Рабочий стол\\omega\\backend-e-commerce\\prisma\\__generated__",
       "fromEnvVar": null
     },
     "config": {
@@ -178,16 +178,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/nrl/backend/prisma/schema.prisma",
+    "sourceFilePath": "C:\\Users\\nurly\\OneDrive\\Рабочий стол\\omega\\backend-e-commerce\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
+    "rootEnvPath": "../../.env",
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "..",
@@ -200,13 +200,13 @@ const config = {
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "POSTGRES_URI",
+        "fromEnvVar": "DATABASE_URL",
         "value": null
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"./__generated__\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"POSTGRES_URI\")\n}\n\nmodel User {\n  id String @id @default(uuid())\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  email    String @unique\n  password String\n\n  role UserRole @default(REGULAR)\n\n  displayName String\n  picture     String?\n\n  method AuthMethod\n\n  accounts Account[]\n\n  isVerified         Boolean @default(false) @map(\"is_verified\")\n  isTwoFactorEnabled Boolean @default(false) @map(\"is_two_factor_enabled\")\n\n  @@map(\"users\")\n}\n\nmodel Account {\n  id String @id @default(uuid())\n\n  type     String\n  provider String\n\n  refreshToken String @map(\"refresh_token\")\n  accessToken  String @map(\"access_token\")\n  expiresAt    Int    @map(\"expires_at\")\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n  user      User?    @relation(fields: [userId], references: [id])\n  userId    String?  @map(\"user_id\")\n\n  @@map(\"accounts\")\n}\n\nmodel Token {\n  id String @id @default(uuid())\n\n  email     String\n  token     String    @unique\n  type      TokenType\n  expiredIn DateTime  @map(\"expired_at\")\n\n  @@map(\"tokens\")\n}\n\nenum UserRole {\n  ADMIN\n  REGULAR\n}\n\nenum AuthMethod {\n  CREDENTIALS\n  GOOGLE\n}\n\nenum TokenType {\n  VERIFICATION\n  TWO_FACTOR\n  PASSWORD_RESET\n}\n",
-  "inlineSchemaHash": "1e0fb8cee8543248fff0171bc37ca218944e994c3ac962989d0687b67d8d541b",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./__generated__\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id String @id @default(uuid())\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  email    String @unique\n  password String\n\n  role UserRole @default(REGULAR)\n\n  displayName String\n  picture     String?\n\n  method AuthMethod\n\n  accounts Account[]\n\n  isVerified         Boolean @default(false) @map(\"is_verified\")\n  isTwoFactorEnabled Boolean @default(false) @map(\"is_two_factor_enabled\")\n\n  @@map(\"users\")\n}\n\nmodel Account {\n  id String @id @default(uuid())\n\n  type     String\n  provider String\n\n  refreshToken String @map(\"refresh_token\")\n  accessToken  String @map(\"access_token\")\n  expiresAt    Int    @map(\"expires_at\")\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n  user      User?    @relation(fields: [userId], references: [id])\n  userId    String?  @map(\"user_id\")\n\n  @@map(\"accounts\")\n}\n\nmodel Token {\n  id String @id @default(uuid())\n\n  email     String\n  token     String    @unique\n  type      TokenType\n  expiredIn DateTime  @map(\"expired_at\")\n\n  @@map(\"tokens\")\n}\n\nenum UserRole {\n  ADMIN\n  REGULAR\n}\n\nenum AuthMethod {\n  CREDENTIALS\n  GOOGLE\n}\n\nenum TokenType {\n  VERIFICATION\n  TWO_FACTOR\n  PASSWORD_RESET\n}\n",
+  "inlineSchemaHash": "0c41dd8a12b35e3431297e437fed825497fe6fe4cee79bd926257b2c1874ccbc",
   "copyEngine": true
 }
 config.dirname = '/'
@@ -218,7 +218,7 @@ config.compilerWasm = undefined
 
 config.injectableEdgeEnv = () => ({
   parsed: {
-    POSTGRES_URI: typeof globalThis !== 'undefined' && globalThis['POSTGRES_URI'] || typeof process !== 'undefined' && process.env && process.env.POSTGRES_URI || undefined
+    DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.DATABASE_URL || undefined
   }
 })
 
