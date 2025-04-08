@@ -10,10 +10,10 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "paths":{
-      "@/*":["src/*"],
-      "@prisma/__generated/*":["prisma/__generated__"],
-      "@prisma/client":["prisma/__generated__/*"],
+    "paths": {
+      "@/*": ["src/*"],
+      "@prisma/__generated/*": ["prisma/__generated__"],
+      "@prisma/client": ["prisma/__generated__/*"]
     },
     "incremental": true,
     "skipLibCheck": true,
@@ -22,5 +22,9 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "include": [
+    ".eslintrc.js",
+    "src/**/*"
+  ]
 }
