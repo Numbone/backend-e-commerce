@@ -56,10 +56,12 @@ export class AuthService {
                     reject(new InternalServerErrorException(
                         'Internal server error,session could not be destroyed, please try again later'
                     ));
-                } else {
+                } 
+                res.clearCookie(
                     this.configService.getOrThrow<string>('SESSION_NAME')
-                    resolve();
-                }
+                )
+                resolve();
+                
             });
         })
     }  

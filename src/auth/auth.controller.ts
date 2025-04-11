@@ -21,7 +21,7 @@ export class AuthController {
 
   @Post('logout')
   @HttpCode(200)
-  public async logout(@Req() req: Request, @Res() res: Response) {
+  public async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     return this.authService.logout(req, res);
   }
 }
