@@ -1,18 +1,24 @@
-import { Controller, Get, HttpCode, Logger } from '@nestjs/common';
-import { UserService } from './user.service';
 import { Authorization } from '@/auth/decorators/auth.decorator';
 import { Authorized } from '@/auth/decorators/authorized.decorator';
+import { Controller, Get, HttpCode, Param } from '@nestjs/common';
+import { UserService } from './user.service';
+import { UserRole } from '@prisma/__generated/*';
 
 @Controller('users')
 export class UserController {
-  private readonly logger = new Logger(UserController.name);
   constructor(private readonly userService: UserService) {}
   
   @Authorization()
   @HttpCode(200)
   @Get('profile')
   public async findProfile(@Authorized('id') id: string) {
-    this.logger.log(`User ID received: ${id}`); 
+    return this.userService.findById(id);
+  }
+
+  @Authorization(UserRole.ADMIN)
+  @HttpCode(200)
+  @Get("by-id/:id")
+  public async findById(@Param('id') id: string) {
     return this.userService.findById(id);
   }
 }
