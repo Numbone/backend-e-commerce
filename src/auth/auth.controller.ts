@@ -9,14 +9,14 @@ import { Recaptcha } from '@nestlab/google-recaptcha';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Recaptcha()
+  // @Recaptcha()
   @Post('register')
   @HttpCode(200)
   public async register(@Req() req: Request, @Body() dto: RegisterDto) {
     return this.authService.register(req, dto);
   }
 
-  @Recaptcha()
+  // @Recaptcha()
   @Post('login')
   @HttpCode(200)
   public async login(@Req() req: Request, @Body() dto: LoginDto) {
