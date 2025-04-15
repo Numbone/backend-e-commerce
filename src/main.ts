@@ -18,6 +18,7 @@ async function bootstrap() {
     .setDescription('The fullstack API description')
     .setVersion('1.0')
     .addTag('full')
+	.addCookieAuth('connect.sid')
     .build();
 
 	const documentFactory = () => SwaggerModule.createDocument(app, configSwagger);

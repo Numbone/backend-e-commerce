@@ -4,7 +4,7 @@ import { RegisterDto } from './dto/register.dto';
 import { Request, Response } from 'express';
 import { LoginDto } from './dto/login.dto';
 import { Recaptcha } from '@nestlab/google-recaptcha';
-import { ApiBody } from '@nestjs/swagger';
+import { ApiBody, ApiCookieAuth } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -22,6 +22,7 @@ export class AuthController {
   }
 
   // @Recaptcha()
+  @ApiCookieAuth('connect.sid')
   @Post('login')
   @HttpCode(200)
   public async login(@Req() req: Request, @Body() dto: LoginDto) {

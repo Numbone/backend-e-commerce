@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import {
 	IsEmail,
 	IsNotEmpty,
@@ -41,7 +41,7 @@ export class LoginDto {
 	 * Код двухфакторной аутентификации (необязательно).
 	 * @example 123456
 	 */
-	@ApiProperty({
+	@ApiPropertyOptional({
 		example: '',
 	 })
 	@IsOptional()
