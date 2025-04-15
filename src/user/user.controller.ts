@@ -3,11 +3,14 @@ import { Authorized } from '@/auth/decorators/authorized.decorator';
 import { Controller, Get, HttpCode, Param } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserRole } from '@prisma/__generated/*';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  
+
+ 
   @Authorization()
   @HttpCode(200)
   @Get('profile')

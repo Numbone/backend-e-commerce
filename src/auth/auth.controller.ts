@@ -4,6 +4,7 @@ import { RegisterDto } from './dto/register.dto';
 import { Request, Response } from 'express';
 import { LoginDto } from './dto/login.dto';
 import { Recaptcha } from '@nestlab/google-recaptcha';
+import { ApiBody } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -12,6 +13,10 @@ export class AuthController {
   // @Recaptcha()
   @Post('register')
   @HttpCode(200)
+  @ApiBody({
+      type: RegisterDto,
+      description: 'Json structure for user object',
+   })
   public async register(@Req() req: Request, @Body() dto: RegisterDto) {
     return this.authService.register(req, dto);
   }

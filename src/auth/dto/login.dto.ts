@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger'
 import {
 	IsEmail,
 	IsNotEmpty,
@@ -14,6 +15,10 @@ export class LoginDto {
 	 * Email пользователя.
 	 * @example example@example.com
 	 */
+	@ApiProperty({
+		example: '',
+		required: true
+	 })
 	@IsString({ message: 'Email должен быть строкой.' })
 	@IsEmail({}, { message: 'Некорректный формат email.' })
 	@IsNotEmpty({ message: 'Email обязателен для заполнения.' })
@@ -23,6 +28,10 @@ export class LoginDto {
 	 * Пароль пользователя.
 	 * @example password123
 	 */
+	@ApiProperty({
+		example: '',
+		required: true
+	 })
 	@IsString({ message: 'Пароль должен быть строкой.' })
 	@IsNotEmpty({ message: 'Поле пароль не может быть пустым.' })
 	@MinLength(6, { message: 'Пароль должен содержать не менее 6 символов.' })
@@ -32,6 +41,9 @@ export class LoginDto {
 	 * Код двухфакторной аутентификации (необязательно).
 	 * @example 123456
 	 */
+	@ApiProperty({
+		example: '',
+	 })
 	@IsOptional()
 	@IsString()
 	code: string

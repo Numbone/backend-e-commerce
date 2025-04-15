@@ -9,9 +9,19 @@ import IORedis from 'ioredis'
 import { AppModule } from './app.module'
 import { ms, StringValue } from './libs/common/utils/ms.utils'
 import { parseBoolean } from './libs/common/utils/parse-boolean.util'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
+	const configSwagger = new DocumentBuilder()
+    .setTitle('fullstack')
+    .setDescription('The fullstack API description')
+    .setVersion('1.0')
+    .addTag('full')
+    .build();
+
+	const documentFactory = () => SwaggerModule.createDocument(app, configSwagger);
+  	SwaggerModule.setup('api', app, documentFactory);
 
 	const config = app.get(ConfigService)
 

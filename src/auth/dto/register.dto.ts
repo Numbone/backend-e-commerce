@@ -1,4 +1,5 @@
 import { IsPasswordsMatchingConstraint } from '@/libs/common/decorators/src/libs/common/decorators/is-passwords-matching-constraint.decorator'
+import { ApiProperty } from '@nestjs/swagger'
 import {
 	IsEmail,
 	IsNotEmpty,
@@ -17,6 +18,10 @@ export class RegisterDto {
 	 * Имя пользователя.
 	 * @example John Doe
 	 */
+	@ApiProperty({
+			example: '',
+			required: true
+		 })
 	@IsString({ message: "Name must be a string." })
 	@IsNotEmpty({ message: 'Name is required.' })
 	name: string
@@ -25,6 +30,10 @@ export class RegisterDto {
 	 * Email пользователя.
 	 * @example example@example.com
 	 */
+	@ApiProperty({
+		example: '',
+		required: true
+	 })
 	@IsString({ message: 'Email must be a string.' })
 	@IsEmail({}, { message: 'Некорректный формат email.' })
 	@IsNotEmpty({ message: 'Email обязателен для заполнения.' })
@@ -34,6 +43,10 @@ export class RegisterDto {
 	 * Пароль пользователя.
 	 * @example password123
 	 */
+	@ApiProperty({
+		example: '',
+		required: true
+	 })
 	@IsString({ message: 'Пароль должен быть строкой.' })
 	@IsNotEmpty({ message: 'Пароль обязателен для заполнения.' })
 	@MinLength(6, {
@@ -45,6 +58,10 @@ export class RegisterDto {
 	 * Подтверждение пароля пользователя.
 	 * @example password123
 	 */
+	@ApiProperty({
+		example: '',
+		required: true
+	 })
 	@IsString({ message: 'Пароль подтверждения должен быть строкой.' })
 	@IsNotEmpty({ message: 'Поле подтверждения пароля не может быть пустым.' })
 	@MinLength(6, {
