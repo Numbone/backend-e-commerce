@@ -10,7 +10,7 @@ import { ApiBody, ApiCookieAuth } from '@nestjs/swagger';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // @Recaptcha()
+  @Recaptcha()
   @Post('register')
   @HttpCode(200)
   @ApiBody({
@@ -21,7 +21,7 @@ export class AuthController {
     return this.authService.register(req, dto);
   }
 
-  // @Recaptcha()
+  @Recaptcha()
   @ApiCookieAuth('connect.sid')
   @Post('login')
   @HttpCode(200)
