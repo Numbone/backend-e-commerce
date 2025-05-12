@@ -148,7 +148,8 @@ exports.Prisma.TokenScalarFieldEnum = {
   email: 'email',
   token: 'token',
   type: 'type',
-  expiredIn: 'expiredIn'
+  expiredIn: 'expiredIn',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
