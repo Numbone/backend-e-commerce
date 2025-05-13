@@ -43,7 +43,7 @@ export class AuthController {
     if (!code) throw new BadRequestException('Code not found');
 
     await this.authService.extractProfileFromCode(req, provider, code);
-    return res.redirect(`${this.configService.getOrThrow<string>('ALLOWED_ORIGIN')}/dashboard/settings`);
+    return res.redirect(`${this.configService.getOrThrow<string>('ALLOWED_ORIGINS')}/dashboard/settings`);
   }
 
   @Get('oauth/connect/:provider')

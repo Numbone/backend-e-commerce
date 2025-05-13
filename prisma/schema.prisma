@@ -4,10 +4,9 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-
 generator client {
   provider = "prisma-client-js"
-  output = "./__generated__"
+  output   = "./__generated__"
 }
 
 datasource db {
@@ -16,56 +15,56 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(uuid())
+  id String @id @default(uuid())
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  email    String   @unique
+  email    String @unique
   password String
 
-  role    UserRole @default(REGULAR)
+  role UserRole @default(REGULAR)
 
   displayName String
-  picture String?
+  picture     String?
 
-  method AuthMethod 
+  method AuthMethod
 
-  accounts Account[] 
+  accounts Account[]
 
-  isVerified Boolean @default(false) @map("is_verified")
+  isVerified         Boolean @default(false) @map("is_verified")
   isTwoFactorEnabled Boolean @default(false) @map("is_two_factor_enabled")
 
   @@map("users")
 }
 
 model Account {
-  id       String   @id @default(uuid())
+  id String @id @default(uuid())
 
-  type String
+  type     String
   provider String
 
   refreshToken String @map("refresh_token")
-  accessToken String @map("access_token")
-  expiresAt Int @map("expires_at")
+  accessToken  String @map("access_token")
+  expiresAt    Int    @map("expires_at")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?  @map("user_id")
 
   @@map("accounts")
-  user User?  @relation(fields: [userId], references: [id])
-  userId String? @map("user_id")
 }
 
-model Token{
-  id  String @id @default(uuid())
+model Token {
+  id String @id @default(uuid())
 
-  email String
-  token String @unique
-  type TokenType
-  expiredIn DateTime @map("expired_at")
-  createdAt DateTime @default(now()) @map("created_at")
-  
+  email     String
+  token     String    @unique
+  type      TokenType
+  expiredIn DateTime  @map("expired_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
   @@map("tokens")
 }
 
