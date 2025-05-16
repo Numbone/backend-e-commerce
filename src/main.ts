@@ -14,15 +14,15 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
 	const configSwagger = new DocumentBuilder()
-    .setTitle('fullstack')
-    .setDescription('The fullstack API description')
-    .setVersion('1.0')
-    .addTag('full')
-	.addCookieAuth('connect.sid')
-    .build();
+		.setTitle('fullstack')
+		.setDescription('The fullstack API description')
+		.setVersion('1.0')
+		.addTag('full')
+		.addCookieAuth('connect.sid')
+		.build();
 
 	const documentFactory = () => SwaggerModule.createDocument(app, configSwagger);
-  	SwaggerModule.setup('api', app, documentFactory);
+	SwaggerModule.setup('api', app, documentFactory);
 
 	const config = app.get(ConfigService)
 

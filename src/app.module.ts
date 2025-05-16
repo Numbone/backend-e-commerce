@@ -8,8 +8,7 @@ import { PrismaModule } from './prisma/prisma.module'
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { ProviderModule } from './auth/provider/provider.module';
-import { MainModule } from './main/main.module';
-import { MailModule } from './mail/mail.module';
+import { MailModule } from './libs/mail/mail.module';
 
 @Module({
 	imports: [
@@ -21,10 +20,9 @@ import { MailModule } from './mail/mail.module';
 		AuthModule,
 		UserModule,
 		ProviderModule,
-		MainModule,
 		MailModule
 	],
 	controllers: [AppController],
 	providers: [AppService]
 })
-export class AppModule {}
+export class AppModule { }
