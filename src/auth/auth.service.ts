@@ -31,10 +31,10 @@ export class AuthService {
             AuthMethod.CREDENTIALS,
             false
         )
+        //TODO: add confirmation service
 
-        this.saveSession(req, newUser)
         return {
-            message: 'User successfully created'
+            message: 'User successfully created. Email has been sent to your email address.'
         }
     }
 
