@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import { hash, verify } from 'argon2';
@@ -8,6 +8,8 @@ import { Request, Response } from 'express';
 import { LoginDto } from './dto/login.dto';
 import { ConfigService } from '@nestjs/config';
 import { ProviderService } from './provider/provider.service';
+import { MailService } from '@/libs/mail/mail.service';
+import { EmailConfirmationService } from './email-confirmation/email-confirmation.service';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +17,8 @@ export class AuthService {
         private readonly prismaService: PrismaService,
         private readonly userService: UserService,
         private readonly configService: ConfigService,
-        private readonly providerService: ProviderService
+        private readonly providerService: ProviderService,
+        private readonly emailConfirmationService: EmailConfirmationService
     ) { }
     public async register(req: Request, dto: RegisterDto) {
         const isExists = await this.userService.findByEmail(dto.email)
@@ -31,7 +34,8 @@ export class AuthService {
             AuthMethod.CREDENTIALS,
             false
         )
-        //TODO: add confirmation service
+
+        await this.emailConfirmationService.sendVerificationToken(dto.email)
 
         return {
             message: 'User successfully created. Email has been sent to your email address.'
@@ -47,6 +51,11 @@ export class AuthService {
 
         if (!isValidPassword) {
             throw new NotFoundException('Password is not valid');
+        }
+
+        if (!user.isVerified) {
+            await this.emailConfirmationService.sendVerificationToken(user.email)
+            throw new UnauthorizedException('Email is not verified');
         }
         return this.saveSession(req, user)
     }
@@ -106,7 +115,7 @@ export class AuthService {
         })
     }
 
-    private async saveSession(req: Request, user: User) {
+    public async saveSession(req: Request, user: User) {
         return new Promise((resolve, reject) => {
             req.session.userId = user.id
             req.session.save((err) => {
