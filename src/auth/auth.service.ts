@@ -11,6 +11,8 @@ import { ProviderService } from './provider/provider.service';
 import { MailService } from '@/libs/mail/mail.service';
 import { EmailConfirmationService } from './email-confirmation/email-confirmation.service';
 import { TwoFactorAuthService } from './two-factor-auth/two-factor-auth.service';
+import { isDev } from '@/libs/common/utils/is-dev.utils';
+import { parseBoolean } from '@/libs/common/utils/parse-boolean.util';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +24,7 @@ export class AuthService {
         private readonly emailConfirmationService: EmailConfirmationService,
         private readonly twoFactorAuthService: TwoFactorAuthService
     ) { }
-    public async register(req: Request, dto: RegisterDto) {
+    public async register(dto: RegisterDto) {
         const isExists = await this.userService.findByEmail(dto.email)
         if (isExists) {
             throw new NotFoundException('User already exists');
@@ -37,7 +39,7 @@ export class AuthService {
             false
         )
 
-        await this.emailConfirmationService.sendVerificationToken(dto.email)
+        // await this.emailConfirmationService.sendVerificationToken(newUser.email)
 
         return {
             message: 'User successfully created. Email has been sent to your email address.'
@@ -54,27 +56,29 @@ export class AuthService {
         if (!isValidPassword) {
             throw new NotFoundException('Password is not valid');
         }
+        if (parseBoolean(this.configService.getOrThrow('MAIL_ACTIVE'))) {
+            if (!user.isVerified) {
+                await this.emailConfirmationService.sendVerificationToken(user.email)
+                throw new UnauthorizedException('Email is not verified');
+            }
 
-        if (!user.isVerified) {
-            await this.emailConfirmationService.sendVerificationToken(user.email)
-            throw new UnauthorizedException('Email is not verified');
+            if (user.isTwoFactorEnabled) {
+                if (!dto.code) {
+                    await this.twoFactorAuthService.sendTwoFactorToken(user.email)
+
+                    return {
+                        message:
+                            'Проверьте вашу почту. Требуется код двухфакторной аутентификации.'
+                    }
+                }
+
+                await this.twoFactorAuthService.validateTwoFactorToken(
+                    user.email,
+                    dto.code
+                )
+            }
         }
 
-        if (user.isTwoFactorEnabled) {
-			if (!dto.code) {
-				await this.twoFactorAuthService.sendTwoFactorToken(user.email)
-
-				return {
-					message:
-						'Проверьте вашу почту. Требуется код двухфакторной аутентификации.'
-				}
-			}
-
-			await this.twoFactorAuthService.validateTwoFactorToken(
-				user.email,
-				dto.code
-			)
-		}
         return this.saveSession(req, user)
     }
 

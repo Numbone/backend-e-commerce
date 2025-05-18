@@ -24,8 +24,8 @@ export class AuthController {
     type: RegisterDto,
     description: 'Json structure for user object',
   })
-  public async register(@Req() req: Request, @Body() dto: RegisterDto) {
-    return this.authService.register(req, dto);
+  public async register(@Body() dto: RegisterDto) {
+    return this.authService.register(dto);
   }
 
   @Recaptcha()
