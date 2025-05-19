@@ -1,4 +1,4 @@
-FROM node:20.17.0-alpine as base 
+FROM node:20.19.2-alpine as base 
 
 RUN apk add --no-cache libc6-compat
 
@@ -24,7 +24,7 @@ WORKDIR /app
 
 COPY --from=build /app/package*.json ./
 
-RUN npm run ci --production
+RUN npm run i --production
 
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/prisma/__generated__ ./prisma/__generated__
