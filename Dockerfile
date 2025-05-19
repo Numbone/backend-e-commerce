@@ -12,7 +12,7 @@ FROM base as build
 
 COPY . .
 
-RUN npm run prisma:generate
+RUN npx prisma generate
 
 RUN npm run build
 
@@ -30,5 +30,3 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/prisma/__generated__ ./prisma/__generated__
 
 CMD ["node", "dist/main"]
-
-
