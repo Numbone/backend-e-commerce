@@ -30,7 +30,7 @@ export class PasswordRecoveryController {
 	 * @param dto - DTO с адресом электронной почты пользователя.
 	 * @returns true, если токен успешно отправлен.
 	 */
-	@Recaptcha()
+	// @Recaptcha()
 	@Post('reset')
 	@HttpCode(HttpStatus.OK)
 	public async resetPassword(@Body() dto: ResetPasswordDto) {
@@ -43,7 +43,7 @@ export class PasswordRecoveryController {
 	 * @param token - Токен для сброса пароля.
 	 * @returns true, если пароль успешно изменен.
 	 */
-	@Recaptcha()
+	// @Recaptcha()
 	@Post('new/:token')
 	@HttpCode(HttpStatus.OK)
 	public async newPassword(

@@ -17,7 +17,7 @@ export class AuthController {
     private readonly configService: ConfigService
   ) { }
 
-  @Recaptcha()
+  // @Recaptcha()
   @Post('register')
   @HttpCode(200)
   @ApiBody({
@@ -28,7 +28,7 @@ export class AuthController {
     return this.authService.register(dto);
   }
 
-  @Recaptcha()
+  // @Recaptcha()
   @ApiCookieAuth('connect.sid')
   @Post('login')
   @HttpCode(200)
