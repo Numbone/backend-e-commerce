@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger'
 import { IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validator'
 
 /**
@@ -8,6 +9,7 @@ export class UpdateUserDto {
      * Имя пользователя.
      * @example Иван Иванов
      */
+    @ApiProperty({ example: 'Иван Иванов' })
     @IsString({ message: 'Имя должно быть строкой.' })
     @IsNotEmpty({ message: 'Имя обязательно для заполнения.' })
     name: string
@@ -16,6 +18,7 @@ export class UpdateUserDto {
      * Email пользователя.
      * @example example@example.com
      */
+    @ApiProperty({ example: 'example@example.com' })
     @IsString({ message: 'Email должен быть строкой.' })
     @IsEmail({}, { message: 'Некорректный формат email.' })
     @IsNotEmpty({ message: 'Email обязателен для заполнения.' })
@@ -24,6 +27,7 @@ export class UpdateUserDto {
     /**
      * Флаг, указывающий, включена ли двухфакторная аутентификация.
      */
+    @ApiProperty({ example: false })
     @IsBoolean({ message: 'isTwoFactorEnabled должно быть булевым значением.' })
     isTwoFactorEnabled: boolean
 }

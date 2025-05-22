@@ -4,10 +4,11 @@ import { RegisterDto } from './dto/register.dto';
 import { Request, Response } from 'express';
 import { LoginDto } from './dto/login.dto';
 import { Recaptcha } from '@nestlab/google-recaptcha';
-import { ApiBody, ApiCookieAuth } from '@nestjs/swagger';
+import { ApiBody, ApiCookieAuth, ApiResponse } from '@nestjs/swagger';
 import { AuthProviderGuard } from './guards/provider.guard';
 import { ProviderService } from './provider/provider.service';
 import { ConfigService } from '@nestjs/config';
+import { User } from '../../prisma/__generated__/index';
 
 @Controller('auth')
 export class AuthController {
@@ -18,6 +19,7 @@ export class AuthController {
   ) { }
 
   // @Recaptcha()
+
   @Post('register')
   @HttpCode(200)
   @ApiBody({
