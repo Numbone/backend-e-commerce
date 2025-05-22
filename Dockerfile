@@ -31,5 +31,6 @@ COPY --from=build /app/sync-prisma-prod.sh ./sync-prisma-prod.sh
 RUN chmod +x ./sync-prisma-prod.sh
 
 # Добавляем запуск скрипта перед приложением
-CMD ["sh", "-c", "ls prisma/migrations/0001-init && cat prisma/migrations/0001-init/migration.sql && ./sync-prisma-prod.sh && node dist/main"]
+CMD ["sh", "-c", "./sync-prisma-prod.sh && node dist/main"]
+
 
