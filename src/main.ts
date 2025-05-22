@@ -28,7 +28,7 @@ async function bootstrap() {
 
 	const redis = new IORedis(config.getOrThrow('REDIS_URL'), {
 		host: config.getOrThrow<string>('REDIS_HOST'),
-		port: config.getOrThrow<number>('REDIS_PORT'),
+		port: Number(config.getOrThrow<number>('REDIS_PORT')),
 		password: config.getOrThrow<string>('REDIS_PASSWORD')
 	})
 
