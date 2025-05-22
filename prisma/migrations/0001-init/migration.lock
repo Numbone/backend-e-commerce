@@ -1,0 +1,1 @@
+echo '{}' > prisma/migrations/0001-init/migration_lock.toml
