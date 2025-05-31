@@ -2,9 +2,10 @@ import { Inject, Injectable, OnModuleInit } from '@nestjs/common'
 
 import { ProviderOptionsSymbol, TypeOptions } from './provider.constants'
 import { BaseOAuthService } from './services/base-oauth.service'
+
 @Injectable()
 export class ProviderService implements OnModuleInit {
-    /**
+	/**
 	 * Конструктор сервиса провайдеров.
 	 *
 	 * @param options - Опции провайдера, содержащие базовый URL и сервисы.

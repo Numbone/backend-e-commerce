@@ -26,7 +26,7 @@ export class AuthProviderGuard implements CanActivate {
 	 * @throws NotFoundException - Если провайдер не найден.
 	 */
 	public canActivate(context: ExecutionContext) {
-		const request = context.switchToHttp().getRequest() as Request
+		const request = context.switchToHttp().getRequest()
 
 		const provider = request.params.provider
 

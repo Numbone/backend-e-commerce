@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config'
+
 import { TypeOptions } from '@/auth/provider/provider.constants'
 import { GoogleProvider } from '@/auth/provider/services/google.provider'
-
 
 /**
  * Конфигурация для провайдеров OAuth.
@@ -23,6 +23,6 @@ export const getProvidersConfig = async (
 				'GOOGLE_CLIENT_SECRET'
 			),
 			scopes: ['email', 'profile']
-		}),
+		})
 	]
 })

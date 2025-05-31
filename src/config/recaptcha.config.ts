@@ -1,8 +1,7 @@
-import { isDev } from '@/libs/common/utils/is-dev.utils'
 import { ConfigService } from '@nestjs/config'
 import { GoogleRecaptchaModuleOptions } from '@nestlab/google-recaptcha'
 
-
+import { isDev } from '@/libs/common/utils/is-dev.utils'
 
 /**
  * Конфигурация для Google reCAPTCHA.

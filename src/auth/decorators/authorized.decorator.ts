@@ -1,7 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common'
 import { User } from '@prisma/__generated/*'
 
-
 /**
  * Декоратор для получения авторизованного пользователя из контекста запроса.
  *
@@ -14,7 +13,7 @@ import { User } from '@prisma/__generated/*'
  * @returns Значение свойства пользователя или весь объект пользователя.
  */
 export const Authorized = createParamDecorator(
-	(data: keyof User, ctx: ExecutionContext) => {	
+	(data: keyof User, ctx: ExecutionContext) => {
 		const request = ctx.switchToHttp().getRequest()
 		const user = request.user
 		return data ? user[data] : user

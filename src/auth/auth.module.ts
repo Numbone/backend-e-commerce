@@ -1,32 +1,34 @@
-import { forwardRef, Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
-import { UserService } from '@/user/user.service';
-import { ProviderModule } from './provider/provider.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { getProvidersConfig } from '@/config/providers.config';
-import { GoogleRecaptchaModule } from '@nestlab/google-recaptcha';
-import { getRecaptchaConfig } from '@/config/recaptcha.config';
-import { EmailConfirmationModule } from './email-confirmation/email-confirmation.module';
-import { MailService } from '@/libs/mail/mail.service';
-import { TwoFactorAuthService } from './two-factor-auth/two-factor-auth.service';
+import { forwardRef, Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { GoogleRecaptchaModule } from '@nestlab/google-recaptcha'
+
+import { getProvidersConfig } from '@/config/providers.config'
+import { getRecaptchaConfig } from '@/config/recaptcha.config'
+import { MailService } from '@/libs/mail/mail.service'
+import { UserService } from '@/user/user.service'
+
+import { AuthController } from './auth.controller'
+import { AuthService } from './auth.service'
+import { EmailConfirmationModule } from './email-confirmation/email-confirmation.module'
+import { ProviderModule } from './provider/provider.module'
+import { TwoFactorAuthService } from './two-factor-auth/two-factor-auth.service'
 
 @Module({
-  imports: [
-    ProviderModule.registerAsync({
-      imports: [ConfigModule],
-      useFactory: getProvidersConfig,
-      inject: [ConfigService]
-    }),
-    GoogleRecaptchaModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: getRecaptchaConfig,
-      inject: [ConfigService]
-    }),
-    forwardRef(() => EmailConfirmationModule)
-  ],
-  controllers: [AuthController],
-  providers: [AuthService, UserService, MailService,TwoFactorAuthService],
-  exports: [AuthService]
+	imports: [
+		ProviderModule.registerAsync({
+			imports: [ConfigModule],
+			useFactory: getProvidersConfig,
+			inject: [ConfigService]
+		}),
+		GoogleRecaptchaModule.forRootAsync({
+			imports: [ConfigModule],
+			useFactory: getRecaptchaConfig,
+			inject: [ConfigService]
+		}),
+		forwardRef(() => EmailConfirmationModule)
+	],
+	controllers: [AuthController],
+	providers: [AuthService, UserService, MailService, TwoFactorAuthService],
+	exports: [AuthService]
 })
-export class AuthModule { }
+export class AuthModule {}

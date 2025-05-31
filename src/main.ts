@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { RedisStore } from 'connect-redis'
 import * as cookieParser from 'cookie-parser'
 import * as session from 'express-session'
@@ -9,7 +10,6 @@ import IORedis from 'ioredis'
 import { AppModule } from './app.module'
 import { ms, StringValue } from './libs/common/utils/ms.utils'
 import { parseBoolean } from './libs/common/utils/parse-boolean.util'
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
@@ -19,10 +19,11 @@ async function bootstrap() {
 		.setVersion('1.0')
 		.addTag('full')
 		.addCookieAuth('connect.sid')
-		.build();
+		.build()
 
-	const documentFactory = () => SwaggerModule.createDocument(app, configSwagger);
-	SwaggerModule.setup('api', app, documentFactory);
+	const documentFactory = () =>
+		SwaggerModule.createDocument(app, configSwagger)
+	SwaggerModule.setup('api', app, documentFactory)
 
 	const config = app.get(ConfigService)
 
